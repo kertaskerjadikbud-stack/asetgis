@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Login Sistem Aset</title>
+
+<style>
+
+body{
+font-family:arial;
+background:#f4f4f4;
+text-align:center;
+padding:100px
+}
+
+input{
+padding:10px;
+margin:5px;
+width:200px
+}
+
+button{
+padding:10px 20px;
+background:#2c7be5;
+color:white;
+border:none
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Login Sistem Aset</h2>
+<h2>LOGIN SISTEM ASET</h2>
 
-<input id="user" placeholder="username">
-<input id="pass" type="password" placeholder="password">
+<input id="user" placeholder="username"><br>
+<input id="pass" type="password" placeholder="password"><br>
 
-<button onclick="login()">Login</button>
+<button onclick="login()">LOGIN</button>
 
 <script>
+
+var api="https://script.google.com/macros/s/AKfycbxMidWBOBU5feZy_Wmx9ERkUFVEr9TvMTA2jAHDiOVYw8nFqVcaKb3Li3gVtBcDZvywaw/exec"
 
 function login(){
 
 var user=document.getElementById("user").value
 var pass=document.getElementById("pass").value
 
-if(user=="dinas" && pass=="12345"){
-localStorage.setItem("role","dinas")
+fetch(api+"?action=login&user="+user+"&pass="+pass)
+.then(r=>r.json())
+.then(data=>{
+
+if(data.status=="success"){
+
+localStorage.setItem("role",data.role)
+localStorage.setItem("sekolah",data.sekolah)
+
 window.location="dashboard.html"
+
+}else{
+
+alert("login gagal")
+
 }
 
-if(user=="smp1" && pass=="12345"){
-localStorage.setItem("role","sekolah")
-localStorage.setItem("sekolah","SMP 1 Kota")
-window.location="dashboard.html"
-}
+})
 
 }
 
