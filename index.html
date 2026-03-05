@@ -4,44 +4,35 @@
 
 <title>Login Sistem Aset</title>
 
-<style>
-
-body{
-font-family:arial;
-background:#f4f4f4;
-text-align:center;
-padding:100px
-}
-
-input{
-padding:10px;
-margin:5px;
-width:200px
-}
-
-button{
-padding:10px 20px;
-background:#2c7be5;
-color:white;
-border:none
-}
-
-</style>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
 </head>
 
-<body>
+<body class="login-page">
 
-<h2>LOGIN SISTEM ASET</h2>
+<div class="login-box">
 
-<input id="user" placeholder="username"><br>
-<input id="pass" type="password" placeholder="password"><br>
+<div class="card">
 
-<button onclick="login()">LOGIN</button>
+<div class="card-body login-card-body">
+
+<p class="login-box-msg">Login Sistem Aset GIS</p>
+
+<input id="user" class="form-control mb-2" placeholder="username">
+<input id="pass" type="password" class="form-control mb-2" placeholder="password">
+
+<button onclick="login()" class="btn btn-primary btn-block">
+Login
+</button>
+
+</div>
+</div>
+</div>
 
 <script>
 
-var api="https://script.google.com/macros/s/AKfycbxMidWBOBU5feZy_Wmx9ERkUFVEr9TvMTA2jAHDiOVYw8nFqVcaKb3Li3gVtBcDZvywaw/exec"
+var api="API_URL"
 
 function login(){
 
@@ -61,7 +52,7 @@ window.location="dashboard.html"
 
 }else{
 
-alert("login gagal")
+alert("Login gagal")
 
 }
 
