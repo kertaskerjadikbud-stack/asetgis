@@ -1,29 +1,71 @@
-<input id="nama" placeholder="Nama Aset">
-<input id="kategori" placeholder="Kategori">
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Input Aset</title>
+
+</head>
+
+<body>
+
+<h2>Input Aset</h2>
+
+<input id="nama" placeholder="Nama Aset"><br>
+
+<select id="kategori">
+<option>Elektronik</option>
+<option>Furniture</option>
+<option>Bangunan</option>
+</select><br>
 
 <select id="kondisi">
 <option>Baik</option>
-<option>Rusak</option>
-</select>
+<option>Rusak Ringan</option>
+<option>Rusak Berat</option>
+</select><br>
 
-<button onclick="gps()">Ambil GPS</button>
+<input id="lat" placeholder="Latitude"><br>
+<input id="lng" placeholder="Longitude"><br>
+
+<input id="foto" placeholder="URL Foto"><br>
+
 <button onclick="simpan()">Simpan</button>
 
 <script>
 
-var lat,lng;
+var api="API_URL"
 
-function gps(){
+var sekolah=localStorage.getItem("sekolah")
 
-navigator.geolocation.getCurrentPosition(function(pos){
+function simpan(){
 
-lat=pos.coords.latitude;
-lng=pos.coords.longitude;
+var nama=document.getElementById("nama").value
+var kategori=document.getElementById("kategori").value
+var kondisi=document.getElementById("kondisi").value
+var lat=document.getElementById("lat").value
+var lng=document.getElementById("lng").value
+var foto=document.getElementById("foto").value
 
-alert("GPS berhasil diambil");
+fetch(api+
+"?action=addAset"+
+"&sekolah="+sekolah+
+"&nama="+nama+
+"&kategori="+kategori+
+"&kondisi="+kondisi+
+"&lat="+lat+
+"&lng="+lng+
+"&foto="+foto)
 
-});
+.then(r=>r.text())
+.then(res=>{
+
+alert("Aset berhasil disimpan")
+
+})
 
 }
 
 </script>
+
+</body>
+</html>
