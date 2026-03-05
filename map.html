@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<div id="map" style="height:100vh"></div>
+
+<script>
+
+var api="https://script.google.com/macros/s/AKfycbyHduWXRS8xvgaQahjNne6EvgqOpF8YgkujhVr5RykEsVaaiH8MdlZH9HKWna3ftzfntQ/exec";
+
+var sekolah=localStorage.getItem("sekolah");
+
+var map=L.map('map').setView([-0.9,119.87],12);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+fetch(api+"?action=getAset&sekolah="+sekolah)
+
+.then(res=>res.json())
+.then(data=>{
+
+data.forEach(function(a){
+
+var marker=L.marker([a[5],a[6]]).addTo(map);
+
+marker.bindPopup(
+
+"<b>"+a[2]+"</b><br>"+
+"Sekolah : "+a[1]+"<br>"+
+"Kategori : "+a[3]+"<br>"+
+"Kondisi : "+a[4]
+
+);
+
+})
+
+})
+
+</script>
