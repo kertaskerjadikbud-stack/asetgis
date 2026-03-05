@@ -1,11 +1,11 @@
-<input id="user" placeholder="username">
-<input id="pass" type="password">
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
 
 <button onclick="login()">LOGIN</button>
 
 <script>
 
-var api="https://script.google.com/macros/s/AKfycbyHduWXRS8xvgaQahjNne6EvgqOpF8YgkujhVr5RykEsVaaiH8MdlZH9HKWna3ftzfntQ/exec";
+var api="URL_API_ANDA";
 
 function login(){
 
@@ -19,7 +19,7 @@ if(data.status=="success"){
 localStorage.setItem("sekolah",data.sekolah);
 localStorage.setItem("role",data.role);
 
-window.location="map.html";
+window.location="dashboard.html";
 
 }else{
 
