@@ -2,39 +2,41 @@
 <html>
 <head>
 
-<title>Input Aset</title>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
 </head>
 
-<body>
+<body class="p-4">
 
-<h2>Input Aset</h2>
+<h3>Input Aset Sekolah</h3>
 
-<input id="nama" placeholder="Nama Aset"><br>
+<input id="nama" class="form-control mb-2" placeholder="Nama Aset">
 
-<select id="kategori">
+<select id="kategori" class="form-control mb-2">
 <option>Elektronik</option>
 <option>Furniture</option>
 <option>Bangunan</option>
-</select><br>
+</select>
 
-<select id="kondisi">
+<select id="kondisi" class="form-control mb-2">
 <option>Baik</option>
 <option>Rusak Ringan</option>
 <option>Rusak Berat</option>
-</select><br>
+</select>
 
-<input id="lat" placeholder="Latitude"><br>
-<input id="lng" placeholder="Longitude"><br>
+<input id="lat" class="form-control mb-2" placeholder="Latitude">
+<input id="lng" class="form-control mb-2" placeholder="Longitude">
 
-<input id="foto" placeholder="URL Foto"><br>
+<input id="foto" class="form-control mb-2" placeholder="URL Foto">
 
-<button onclick="simpan()">Simpan</button>
+<button onclick="simpan()" class="btn btn-success">
+Simpan
+</button>
 
 <script>
 
-var api="https://script.google.com/macros/s/AKfycbxMidWBOBU5feZy_Wmx9ERkUFVEr9TvMTA2jAHDiOVYw8nFqVcaKb3Li3gVtBcDZvywaw/exec"
-
+var api="API_URL"
 var sekolah=localStorage.getItem("sekolah")
 
 function simpan(){
