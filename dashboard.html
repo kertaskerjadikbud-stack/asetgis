@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+
+#map{
+height:100vh;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script>
+
+var map = L.map('map').setView([-0.890,119.870],13);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+).addTo(map);
+
+
+fetch("API_URL")
+.then(res=>res.json())
+.then(data=>{
+
+var role = localStorage.getItem("role")
+var sekolah = localStorage.getItem("sekolah")
+
+data.forEach(a=>{
+
+if(role=="sekolah" && a.sekolah!=sekolah) return
+
+var marker = L.marker([a.lat,a.lng]).addTo(map)
+
+marker.bindPopup(
+"<b>"+a.nama_aset+"</b><br>"+
+"Kondisi:"+a.kondisi+"<br>"+
+"<img src='"+a.foto+"' width=100>"
+)
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
