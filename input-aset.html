@@ -1,0 +1,29 @@
+<input id="nama" placeholder="Nama Aset">
+<input id="kategori" placeholder="Kategori">
+
+<select id="kondisi">
+<option>Baik</option>
+<option>Rusak</option>
+</select>
+
+<button onclick="gps()">Ambil GPS</button>
+<button onclick="simpan()">Simpan</button>
+
+<script>
+
+var lat,lng;
+
+function gps(){
+
+navigator.geolocation.getCurrentPosition(function(pos){
+
+lat=pos.coords.latitude;
+lng=pos.coords.longitude;
+
+alert("GPS berhasil diambil");
+
+});
+
+}
+
+</script>
