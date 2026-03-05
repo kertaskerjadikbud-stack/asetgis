@@ -1,151 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
+<input id="user" placeholder="username">
+<input id="pass" type="password">
 
-<title>Sistem Aset GIS</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<style>
-
-body{
-margin:0;
-font-family:arial;
-}
-
-#map{
-height:100vh;
-}
-
-.form{
-position:absolute;
-top:10px;
-left:10px;
-background:white;
-padding:10px;
-z-index:999;
-border-radius:8px;
-}
-
-input,select{
-width:200px;
-margin:3px;
-padding:5px;
-}
-
-button{
-padding:6px 10px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="form">
-
-<h3>Input Aset</h3>
-
-<input id="nama" placeholder="Nama aset"><br>
-
-<input id="kategori" placeholder="Kategori"><br>
-
-<select id="kondisi">
-<option>Baik</option>
-<option>Rusak</option>
-</select><br>
-
-<button onclick="gps()">Ambil GPS</button>
-
-<br>
-
-<button onclick="simpan()">Simpan</button>
-
-</div>
-
-<div id="map"></div>
+<button onclick="login()">LOGIN</button>
 
 <script>
 
-var api="https://script.google.com/macros/s/AKfycbz5bWm7Lgc_EH3oPd8i67O69aVDVY3xIMUTy6xX9HlKGqqk_0yErfAgxru0TaBxwxY30A/exec";
+var api="https://script.google.com/macros/s/AKfycbyHduWXRS8xvgaQahjNne6EvgqOpF8YgkujhVr5RykEsVaaiH8MdlZH9HKWna3ftzfntQ/exec";
 
-var lat=0;
-var lng=0;
+function login(){
 
-var map = L.map('map').setView([-0.9,119.87],13);
+fetch(api+"?action=login&username="+user.value+"&password="+pass.value)
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-maxZoom:19
-}).addTo(map);
-
-load();
-
-function load(){
-
-fetch(api+"?action=get")
 .then(res=>res.json())
 .then(data=>{
 
-for(var i=1;i<data.length;i++){
+if(data.status=="success"){
 
-var marker=L.marker([
-data[i][4],
-data[i][5]
-]).addTo(map);
+localStorage.setItem("sekolah",data.sekolah);
+localStorage.setItem("role",data.role);
 
-marker.bindPopup(
+window.location="map.html";
 
-"<b>"+data[i][1]+"</b><br>"+
-"Kategori: "+data[i][2]+"<br>"+
-"Kondisi: "+data[i][3]
+}else{
 
-);
+alert("Login gagal");
 
 }
 
 })
-
-}
-
-function gps(){
-
-navigator.geolocation.getCurrentPosition(function(pos){
-
-lat=pos.coords.latitude;
-lng=pos.coords.longitude;
-
-alert("GPS ditemukan");
-
-});
-
-}
-
-function simpan(){
-
-fetch(api,{
-method:"POST",
-body:new URLSearchParams({
-
-action:"add",
-nama:nama.value,
-kategori:kategori.value,
-kondisi:kondisi.value,
-lat:lat,
-lng:lng,
-foto:""
-
-})
-})
-.then(()=>location.reload())
 
 }
 
 </script>
-
-</body>
-</html>
