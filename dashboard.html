@@ -3,6 +3,8 @@
 
 <head>
 
+<title>Peta Aset Sekolah</title>
+
 <link rel="stylesheet"
 href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
@@ -11,7 +13,7 @@ href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <style>
 
 #map{
-height:100vh;
+height:100vh
 }
 
 </style>
@@ -24,30 +26,39 @@ height:100vh;
 
 <script>
 
-var map = L.map('map').setView([-0.890,119.870],13);
+var api="https://script.google.com/macros/s/AKfycbxMidWBOBU5feZy_Wmx9ERkUFVEr9TvMTA2jAHDiOVYw8nFqVcaKb3Li3gVtBcDZvywaw/exec"
+
+var role=localStorage.getItem("role")
+var sekolah=localStorage.getItem("sekolah")
+
+var map = L.map('map').setView([-0.890,119.870],13)
 
 L.tileLayer(
 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-).addTo(map);
+).addTo(map)
 
-
-fetch("API_URL")
+fetch(api+"?action=getAset")
 .then(res=>res.json())
 .then(data=>{
-
-var role = localStorage.getItem("role")
-var sekolah = localStorage.getItem("sekolah")
 
 data.forEach(a=>{
 
 if(role=="sekolah" && a.sekolah!=sekolah) return
 
-var marker = L.marker([a.lat,a.lng]).addTo(map)
+var iconColor="green"
+
+if(a.kondisi=="Rusak Ringan") iconColor="orange"
+if(a.kondisi=="Rusak Berat") iconColor="red"
+
+var marker=L.marker([a.lat,a.lng]).addTo(map)
 
 marker.bindPopup(
-"<b>"+a.nama_aset+"</b><br>"+
+
+"<b>"+a.nama+"</b><br>"+
+"Kategori:"+a.kategori+"<br>"+
 "Kondisi:"+a.kondisi+"<br>"+
-"<img src='"+a.foto+"' width=100>"
+"<img src='"+a.foto+"' width='120'>"
+
 )
 
 })
