@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+
+#map{
+height:600px
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-3">
+
+<h3>Peta Aset Sekolah</h3>
+
+<div id="map"></div>
+
+</div>
+
+<script>
+
+var api="API_URL"
+
+var role=localStorage.getItem("role")
+var sekolah=localStorage.getItem("sekolah")
+
+var map=L.map('map').setView([-0.890,119.870],13)
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+).addTo(map)
+
+fetch(api+"?action=getAset")
+.then(r=>r.json())
+.then(data=>{
+
+data.forEach(a=>{
+
+if(role=="sekolah" && a.sekolah!=sekolah) return
+
+var marker=L.marker([a.lat,a.lng]).addTo(map)
+
+marker.bindPopup(
+
+"<b>"+a.nama+"</b><br>"+
+"Kondisi:"+a.kondisi+"<br>"+
+"<img src='"+a.foto+"' width='120'>"
+
+)
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
